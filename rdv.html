@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Demande de rendez-vous en ligne | Service Urologie — CHU Henri Mondor</title>
+  <meta name="description" content="Formulaire de demande de rendez-vous en ligne avec le service d'urologie du CHU Henri Mondor.">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div id="header-placeholder"></div>
+
+  <main class="page-article">
+
+    <nav class="breadcrumb" aria-label="Fil d'Ariane">
+      <a href="index.html">Accueil</a>
+      <span class="sep">&gt;</span>
+      <span class="current">Demande de rendez-vous en ligne</span>
+    </nav>
+
+    <h1 class="page-title">Demande de rendez-vous en ligne</h1>
+
+    <a href="index.html" class="back-link">&lt; revenir à l'accueil</a>
+
+    <form class="rdv-form" action="#" method="post" novalidate>
+
+      <!-- Nom : groupe de 2 inputs avec sous-labels (Prénom / Nom) -->
+      <fieldset class="form-group">
+        <legend class="form-label">Nom <span class="form-required" aria-hidden="true">*</span></legend>
+        <div class="form-row">
+          <div class="form-field">
+            <input type="text" id="rdv-prenom" name="prenom" class="form-control" required autocomplete="given-name">
+            <label for="rdv-prenom" class="form-hint">Prénom</label>
+          </div>
+          <div class="form-field">
+            <input type="text" id="rdv-nom" name="nom" class="form-control" required autocomplete="family-name">
+            <label for="rdv-nom" class="form-hint">Nom</label>
+          </div>
+        </div>
+      </fieldset>
+
+      <div class="form-group">
+        <label for="rdv-email" class="form-label">E-mail <span class="form-required" aria-hidden="true">*</span></label>
+        <input type="email" id="rdv-email" name="email" class="form-control" required autocomplete="email">
+      </div>
+
+      <div class="form-group">
+        <label for="rdv-tel" class="form-label">Numéro de téléphone <span class="form-required" aria-hidden="true">*</span></label>
+        <input type="tel" id="rdv-tel" name="telephone" class="form-control" required autocomplete="tel">
+      </div>
+
+      <div class="form-group">
+        <label for="rdv-medecin" class="form-label">Souhaitez-vous un médecin en particulier&nbsp;?</label>
+        <select id="rdv-medecin" name="medecin" class="form-control">
+          <option value="">Aucune préférence</option>
+          <option value="de-la-taille">Pr. de la Taille</option>
+          <!-- TODO : compléter la liste des médecins du service -->
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="rdv-type" class="form-label">Quel type de consultation souhaitez-vous&nbsp;?</label>
+        <select id="rdv-type" name="type-consultation" class="form-control">
+          <option value="">Choisissez un type de consultation</option>
+          <option value="premiere">Première consultation</option>
+          <option value="suivi">Consultation de suivi</option>
+          <option value="avis">Avis spécialisé</option>
+          <option value="pre-op">Consultation pré-opératoire</option>
+          <option value="post-op">Consultation post-opératoire</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="rdv-message" class="form-label">Texte de votre message</label>
+        <textarea id="rdv-message" name="message" class="form-control" rows="6" maxlength="4000"></textarea>
+        <p class="form-counter" aria-live="polite">
+          <span id="rdv-counter">0</span> sur 4000 caractères maximum.
+        </p>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn-pill btn-pill--rect">Envoyer</button>
+      </div>
+
+    </form>
+
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>

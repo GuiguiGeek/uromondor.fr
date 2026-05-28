@@ -1,0 +1,53 @@
+<!-- ==========================================================
+     Partial : header.html
+     Inclus dynamiquement via fetch() depuis script.js
+     ========================================================== -->
+<header class="site-header">
+    <div class="header-top">
+        <div class="logo-block">
+            <div class="logo-circle">
+                <img src="/assets/img/Logo-192x192.png" alt="Logo Service Urologie">
+            </div>
+            <div class="logo-text">
+                <h1>Service urologie</h1>
+                <p>CHU Henri Mondor</p>
+            </div>
+        </div>
+        <a href="#" class="youtube-link" aria-label="Chaîne YouTube">
+            <i class="fab fa-youtube"></i>
+        </a>
+    </div>
+
+    <nav class="main-nav" aria-label="Navigation principale">
+        <button class="burger" id="burger" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="nav-list">
+            <i class="fas fa-bars"></i>
+        </button>
+        <ul class="nav-list" id="nav-list">
+            <li><a href="index.html" class="active">Accueil</a></li>
+            <li class="has-dropdown">
+                <a href="#">L'équipe <i class="fas fa-chevron-down"></i></a>
+                <ul class="dropdown">
+                    <li><a href="#">Médecins</a></li>
+                    <li><a href="#">Personnel soignant</a></li>
+                    <li><a href="#">Recherche</a></li>
+                </ul>
+            </li>
+            <li class="has-dropdown">
+                <a href="#">Nos spécialités <i class="fas fa-chevron-down"></i></a>
+                <ul class="dropdown">
+                    <li><a href="#">Oncologie</a></li>
+                    <li><a href="#">Lithiase urinaires</a></li>
+                    <li><a href="#">Transplantation</a></li>
+                    <li><a href="#">Chirurgie robotique</a></li>
+                    <li><a href="#">Urologie fonctionnelle</a></li>
+                </ul>
+            </li>
+            <li><a href="#">Espace patient</a></li>
+            <li><a href="#">Accès et horaires</a></li>
+            <li><a href="#">RDV en ligne</a></li>
+        </ul>
+        <button class="search-btn" aria-label="Rechercher">
+            <i class="fas fa-search"></i>
+        </button>
+    </nav>
+</header>

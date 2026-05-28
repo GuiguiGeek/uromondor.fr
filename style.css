@@ -1,0 +1,1316 @@
+/* ============================================================
+   Service Urologie - CHU Henri Mondor
+   Stylesheet (mobile-first)
+
+   Sommaire :
+   1. Variables & Reset
+   2. Header & Navigation
+   3. Footer
+   4. Layout & Wrappers (page-article, banner-bg)
+   5. Composants génériques
+      5.1 Boutons (btn-pill, btn-spec)
+      5.2 Bandeaux (section-banner, subsection-banner, title-pill)
+      5.3 Listes & contenu (content-list, intro-label, button-row)
+      5.4 Médias (video-wrapper, map-wrapper)
+      5.5 Layouts internes (two-col, info-list)
+      5.6 Navigation interne (breadcrumb, back-link, quick-access)
+   6. Pages
+      6.1 Accueil (intro, hero team, spécialités, contact)
+      6.2 Article (page-title, content, article-section)
+      6.3 Profil docteur (profile-hero, doctor-*)
+   ============================================================ */
+
+
+/* ============================================================
+   1. VARIABLES & RESET
+   ============================================================ */
+:root {
+    /* Couleurs principales (bleus) */
+    --primary-blue: #1B3A6E;
+    --secondary-blue: #2563EB;
+    --button-blue: #1E5BC6;
+    --button-blue-hover: #1846A0;
+
+    /* Couleurs d'accent */
+    --amber: #FFB87A;          /* liens sur fond sombre */
+    --youtube-red: #FF0000;
+
+    /* Bandeaux : palette unifiée bleu marine (WCAG AAA) */
+    --banner-sub-bg: #EEF2F7;          /* gris bleuté très clair */
+    --banner-sub-text: var(--primary-blue);
+    --banner-sub-accent: var(--secondary-blue);
+
+    /* Couleurs neutres */
+    --white: #FFFFFF;
+    --text: #2A2A2A;
+    --light-bg: #F1F1F1;
+    --footer-bg: #1B3A6E;
+
+    /* Bordures & nuances neutres */
+    --border-light: #E8E8E8;
+    --border-lighter: #EEEEEE;
+    --bg-subtle: #F9F9F9;
+    --bg-placeholder: #E9E9E9;
+
+    /* Overlays */
+    --pill-overlay: rgba(80, 80, 80, 0.55);
+    --hero-overlay: linear-gradient(135deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.40) 100%);
+
+    /* Ombres */
+    --shadow-soft: 0 2px 6px rgba(0, 0, 0, 0.08);
+    --shadow-medium: 0 6px 16px rgba(0, 0, 0, 0.12);
+    --shadow-strong: 0 8px 24px rgba(0, 0, 0, 0.45);
+    --shadow-pill-white: 0 2px 8px rgba(0, 0, 0, 0.20);
+
+    /* Ombres de texte (lisibilité sur photo / fond sombre) */
+    --text-shadow-strong: 0 1px 3px rgba(0, 0, 0, 0.6);
+    --text-shadow-soft: 0 1px 2px rgba(0, 0, 0, 0.4);
+
+    /* Sizing */
+    --max-width: 1280px;
+    --max-width-article: 1100px;
+    --radius: 8px;
+    --radius-pill: 999px;
+
+    /* Typographie */
+    --font-base: 'Helvetica Neue', 'Segoe UI', Arial, sans-serif;
+
+	/* Formulaires */
+	--border-input: #999999;       /* bordure inputs (contraste WCAG AA OK) */
+	--text-muted: #666666;         /* sous-labels, hints, compteurs */
+	--required-red: #C0392B;       /* astérisque champs obligatoires */
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+    font-family: var(--font-base);
+    color: var(--text);
+    background: var(--light-bg);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+}
+
+a { color: inherit; text-decoration: none; }
+img { max-width: 100%; display: block; }
+button { font-family: inherit; cursor: pointer; }
+
+
+/* ============================================================
+   2. HEADER & NAVIGATION
+   ============================================================ */
+.site-header {
+    background: var(--white);
+    box-shadow: var(--shadow-soft);
+    position: relative;
+    z-index: 50;
+}
+
+.header-top {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0.6rem 1rem;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.logo-block {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    grid-column: 1 / 2;
+}
+
+.logo-circle {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    overflow: hidden;
+    flex-shrink: 0;
+    border: 2px solid var(--primary-blue);
+    background: var(--white);
+}
+.logo-circle img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.logo-text h1 {
+    color: var(--primary-blue);
+    font-size: 1.15rem;
+    font-weight: 700;
+    line-height: 1.2;
+}
+.logo-text p {
+    color: var(--primary-blue);
+    font-size: 0.95rem;
+    line-height: 1.2;
+}
+
+.youtube-link {
+    color: var(--youtube-red);
+    font-size: 1.8rem;
+    grid-column: 3 / 4;
+    line-height: 0;
+    transition: transform 0.2s;
+}
+.youtube-link:hover { transform: scale(1.1); }
+
+/* --- Navigation --- */
+.main-nav {
+    border-top: 1px solid var(--border-light);
+    background: var(--white);
+    position: relative;
+}
+
+.burger {
+    display: flex;
+    width: 100%;
+    background: var(--button-blue);
+    color: var(--white);
+    border: none;
+    padding: 0.85rem 1rem;
+    font-size: 1.4rem;
+    align-items: center;
+    justify-content: center;
+}
+
+.nav-list {
+    list-style: none;
+    display: none;
+    flex-direction: column;
+    background: var(--white);
+}
+.nav-list.open { display: flex; }
+
+.nav-list > li > a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    padding: 0.9rem 1rem;
+    color: var(--primary-blue);
+    font-weight: 500;
+    border-bottom: 1px solid var(--border-lighter);
+    transition: background 0.2s, color 0.2s;
+}
+.nav-list > li > a:hover,
+.nav-list > li > a.active {
+    color: var(--secondary-blue);
+}
+
+.nav-list .has-dropdown { position: relative; }
+
+.nav-list .dropdown {
+    list-style: none;
+    background: var(--bg-subtle);
+    display: none;
+}
+.nav-list .has-dropdown.open > .dropdown { display: block; }
+
+.nav-list .dropdown a {
+    display: block;
+    padding: 0.7rem 2rem;
+    color: var(--text);
+    font-size: 0.95rem;
+    border-bottom: 1px solid var(--border-lighter);
+}
+.nav-list .dropdown a:hover { color: var(--secondary-blue); }
+
+.search-btn {
+    display: none;
+    background: transparent;
+    border: none;
+    color: var(--primary-blue);
+    font-size: 1.1rem;
+}
+
+/* Tablette : nav horizontale */
+@media (min-width: 768px) {
+    .header-top {
+        justify-content: center;
+        padding: 1rem 1.5rem;
+    }
+
+    .logo-block { gap: 1rem; }
+    .logo-circle { width: 80px; height: 80px; }
+    .logo-text h1 { font-size: 1.8rem; }
+    .logo-text p { font-size: 1.4rem; }
+
+    .burger { display: none; }
+
+    .main-nav {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0 1rem;
+    }
+
+    .nav-list {
+        display: flex !important;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.2rem;
+    }
+    .nav-list > li > a {
+        padding: 0.9rem 0.9rem;
+        border-bottom: none;
+        font-size: 0.95rem;
+    }
+
+    /* Dropdown au survol */
+    .nav-list .dropdown {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        min-width: 220px;
+        box-shadow: var(--shadow-medium);
+        background: var(--white);
+        z-index: 100;
+    }
+    .nav-list .has-dropdown:hover > .dropdown,
+    .nav-list .has-dropdown:focus-within > .dropdown {
+        display: block;
+    }
+
+    .search-btn {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.5rem 1rem;
+    }
+}
+
+/* Desktop : logo centré */
+@media (min-width: 1024px) {
+    .header-top {
+        grid-template-columns: 1fr auto 1fr;
+        padding: 1.2rem 2rem;
+    }
+
+    .logo-block {
+        grid-column: 2 / 3;
+        justify-self: center;
+    }
+    .logo-circle { width: 95px; height: 95px; }
+    .logo-text h1 { font-size: 2rem; }
+    .logo-text p { font-size: 1.6rem; }
+
+    .youtube-link {
+        grid-column: 3 / 4;
+        justify-self: end;
+        font-size: 2rem;
+    }
+
+    .nav-list > li > a {
+        padding: 1rem 1.4rem;
+        font-size: 1rem;
+    }
+}
+
+
+/* ============================================================
+   3. FOOTER
+   ============================================================ */
+.site-footer {
+    background: var(--footer-bg);
+    color: var(--white);
+    padding: 2rem 1rem 1rem;
+}
+
+.footer-aphp {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+.footer-aphp img {
+    max-width: 280px;
+    margin: 0 auto 0.6rem;
+}
+.footer-aphp p {
+    border-top: 1px solid rgba(255, 255, 255, 0.6);
+    padding-top: 0.5rem;
+    display: inline-block;
+    font-weight: 500;
+}
+
+.footer-cols {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+}
+
+.footer-col h3 {
+    text-align: center;
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+    font-weight: 700;
+}
+.footer-col p {
+    margin-bottom: 0.3rem;
+    font-size: 0.95rem;
+}
+.footer-col .footer-gap { margin-top: 1rem; }
+
+.footer-bottom {
+    max-width: var(--max-width);
+    margin: 2rem auto 0;
+    padding-top: 1rem;
+    text-align: center;
+    font-size: 0.85rem;
+    opacity: 0.9;
+}
+
+@media (min-width: 768px) {
+    .footer-cols {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.5rem;
+    }
+    .footer-col h3 { text-align: left; }
+}
+
+@media (min-width: 1024px) {
+    .footer-cols { gap: 4rem; padding: 0 2rem; }
+}
+
+
+/* ============================================================
+   4. LAYOUT & WRAPPERS
+   ============================================================ */
+
+/* Wrapper de page article (chirurgie-robotique, spécialités, etc.) */
+.page-article {
+    max-width: var(--max-width-article);
+    margin: 0 auto;
+    padding: 1.5rem 1rem 3rem;
+    background: var(--light-bg);
+}
+@media (min-width: 768px) {
+    .page-article { padding: 2rem 2rem 4rem; }
+}
+@media (min-width: 1024px) {
+    .page-article { padding: 2.5rem 2rem 5rem; }
+}
+
+/* Image de fond avec overlay sombre (réutilisable sur toute bannière photo).
+   Le parent doit être `position: relative; overflow: hidden;`. */
+.banner-bg {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    z-index: 0;
+}
+/* Calque sombre par-dessus la photo : garantit un contraste suffisant
+   pour le texte blanc, quel que soit le contenu de l'image de fond. */
+.banner-bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--hero-overlay);
+}
+
+
+/* ============================================================
+   5. COMPOSANTS GÉNÉRIQUES
+   ============================================================ */
+
+/* ---------- 5.1 Boutons ---------- */
+
+/* Bouton pill (défaut bleu, utilisé partout : contact, articles, profil…) */
+.btn-pill {
+    display: inline-block;
+    margin-top: 1rem;
+    padding: 0.7rem 1.6rem;
+    background: var(--button-blue);
+    color: var(--white) !important;
+    border-radius: var(--radius-pill);
+    font-weight: 600;
+    text-decoration: none !important;
+    transition: background 0.2s, transform 0.2s;
+}
+.btn-pill:hover {
+    background: var(--button-blue-hover);
+    transform: translateY(-2px);
+}
+
+/* Variante blanche (Doctolib) */
+.btn-pill--white {
+    background: var(--white);
+    color: var(--secondary-blue) !important;
+    box-shadow: var(--shadow-pill-white);
+}
+.btn-pill--white:hover { background: #F0F0F0; }
+
+/* Variante "Doctolib" : police script pour le clin d'œil typographique */
+.btn-pill--doctolib {
+    font-family: 'Pacifico', 'Brush Script MT', cursive;
+    font-size: 1.4rem;
+    line-height: 1.1;
+}
+
+/* Variante rectangulaire (boutons submit, actions de formulaire) */
+.btn-pill--rect {
+    border: none;
+    border-radius: var(--radius);
+    padding: 0.65rem 1.5rem;
+    margin-top: 0;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+/* Bouton spécialités (homepage) */
+.btn-spec {
+    display: block;
+    background: var(--button-blue);
+    color: var(--white);
+    text-align: center;
+    padding: 0.9rem 1rem;
+    border-radius: var(--radius);
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    transition: background 0.2s, transform 0.2s;
+}
+.btn-spec:hover {
+    background: var(--button-blue-hover);
+    transform: translateY(-2px);
+}
+@media (min-width: 1024px) {
+    .btn-spec { padding: 1rem 1.2rem; font-size: 1rem; }
+}
+
+
+/* ---------- 5.2 Bandeaux ---------- */
+
+/* Bandeau de section (bleu marine plein, texte blanc lisible).
+   Variante : --solid (texte plein, plus arrondi, pour gros titres). */
+.section-banner {
+    background: var(--primary-blue);
+    border-radius: var(--radius);
+    padding: 1rem 1.5rem;
+    margin: 2.5rem 0 1.2rem;
+    box-shadow: var(--shadow-soft);
+}
+.section-banner h2 {
+    color: var(--white);
+    font-size: 1.4rem;
+    font-weight: 700;
+    text-align: center;
+    margin: 0;
+}
+
+.section-banner--solid {
+    border-radius: var(--radius-pill);
+    padding: 1.2rem 2rem;
+}
+.section-banner--solid h2,
+.section-banner--solid h3 {
+    color: var(--white);
+    text-align: left;
+    margin: 0;
+    line-height: 1.3;
+    font-weight: 700;
+}
+.section-banner--solid h2 { font-size: 1.3rem; }
+.section-banner--solid h3 { font-size: 1.3rem; }
+.section-banner--solid h2 + h3 { margin-top: 0.2rem; }
+
+@media (min-width: 768px) {
+    .section-banner { padding: 1.2rem 2rem; }
+    .section-banner h2 { font-size: 1.6rem; }
+    .section-banner--solid { padding: 1.4rem 2.5rem; }
+    .section-banner--solid h2 { font-size: 1.55rem; }
+    .section-banner--solid h3 { font-size: 1.5rem; }
+}
+@media (min-width: 1024px) {
+    .section-banner { padding: 1.4rem 2.5rem; }
+    .section-banner h2 { font-size: 1.8rem; }
+    .section-banner--solid { padding: 1.5rem 3rem; }
+    .section-banner--solid h2 { font-size: 1.7rem; }
+    .section-banner--solid h3 { font-size: 1.6rem; }
+}
+
+/* Sous-bandeau (gris bleuté + accent latéral) pour les sections imbriquées */
+.subsection-banner {
+    background: var(--banner-sub-bg);
+    border-left: 4px solid var(--banner-sub-accent);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    padding: 0.7rem 1.2rem;
+    margin: 1.5rem 0 0.8rem;
+}
+.subsection-banner h3 {
+    color: var(--banner-sub-text);
+    font-size: 1rem;
+    font-weight: 700;
+    margin: 0;
+    text-align: left;
+}
+@media (min-width: 768px) {
+    .subsection-banner { padding: 0.8rem 1.5rem; }
+    .subsection-banner h3 { font-size: 1.05rem; }
+}
+
+/* Pill / titre arrondi gris translucide (hero homepage) */
+.title-pill {
+    position: relative;
+    z-index: 2;
+    background: var(--pill-overlay);
+    border-radius: var(--radius-pill);
+    padding: 0.6rem 2.5rem;
+    box-shadow: var(--shadow-soft);
+}
+.title-pill h2 {
+    color: var(--white);
+    font-size: 1.6rem;
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+}
+@media (min-width: 1024px) {
+    .title-pill { padding: 0.8rem 3.5rem; }
+    .title-pill h2 { font-size: 2rem; }
+}
+
+
+/* ---------- 5.3 Listes & contenu ---------- */
+
+/* Listes (ul / ol) à l'intérieur du contenu d'une page */
+.content-list {
+    padding-left: 1.8rem;
+    margin: 0.5rem 0 1.2rem;
+}
+.content-list li {
+    margin-bottom: 0.7rem;
+    line-height: 1.65;
+    color: var(--text);
+}
+.content-list li strong { color: var(--text); }
+
+/* Listes imbriquées : espacement compact pour les sous-niveaux */
+.content-list ul,
+.content-list ol {
+    margin-top: 0.5rem;
+    margin-bottom: 0;
+    padding-left: 1.5rem;
+}
+
+/* Liens dans le contenu courant (les .btn-pill restent protégés par !important) */
+.content a {
+    color: var(--secondary-blue);
+    text-decoration: underline;
+    transition: color 0.2s;
+}
+.content a:hover { color: var(--primary-blue); }
+
+/* Petit label introductif (mutualisé : "En savoir plus", "Visualiser la vidéo…") */
+.intro-label,
+.video-intro {
+    margin-top: 1.5rem;
+    margin-bottom: 0.8rem;
+    font-weight: 500;
+    color: var(--text);
+}
+
+/* Rangée de boutons centrés (avec wrap sur mobile) */
+.button-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.8rem 1.5rem;
+    margin: 0.5rem 0 2rem;
+}
+.button-row .btn-pill {
+    margin-top: 0;
+    padding: 0.7rem 1.4rem;
+    font-size: 0.95rem;
+}
+
+/* Variante : alignée à droite (ex : bouton Télécharger) */
+.button-row--right { justify-content: flex-end; }
+
+@media (min-width: 768px) {
+    .button-row .btn-pill { padding: 0.75rem 1.8rem; }
+}
+
+
+/* ---------- 5.4 Médias (vidéo, carte) ---------- */
+
+/* Conteneur vidéo responsive 16:9 */
+.video-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 720px;
+    aspect-ratio: 16 / 9;
+    margin: 1rem auto;
+    background: #000;
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow-soft);
+}
+/* Fallback si aspect-ratio non supporté (anciens navigateurs) */
+@supports not (aspect-ratio: 16 / 9) {
+    .video-wrapper {
+        height: 0;
+        padding-bottom: 56.25%;
+    }
+}
+.video-wrapper iframe,
+.video-wrapper video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+/* Vidéo en format réduit (1ère et dernière du screenshot chirurgie robotique) */
+.video-wrapper.video-small { max-width: 320px; }
+
+/* Légende sous une vidéo */
+.video-caption {
+    text-align: center;
+    font-size: 0.9rem;
+    color: var(--text);
+    margin: 0.8rem auto 1rem;
+    max-width: 720px;
+    line-height: 1.5;
+}
+.video-caption em { font-style: italic; }
+
+/* Conteneur de carte (iframe Google Maps) responsive */
+.map-wrapper {
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    margin: 1rem 0 1.5rem;
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow-soft);
+    background: var(--bg-placeholder);
+}
+.map-wrapper iframe {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+@media (min-width: 768px) {
+    .map-wrapper { aspect-ratio: 16 / 9; }
+}
+
+
+/* ---------- 5.5 Layouts internes ---------- */
+
+/* Layout deux colonnes (mobile-first : empilées par défaut) */
+.two-col {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    margin: 1rem 0;
+}
+@media (min-width: 768px) {
+    .two-col {
+        grid-template-columns: 1fr 1fr;
+        gap: 2.5rem;
+        align-items: start;
+    }
+}
+@media (min-width: 1024px) {
+    .two-col { gap: 3.5rem; }
+}
+
+/* Liste de définition (Adresse / Téléphone) en grille 2 colonnes */
+.info-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.4rem;
+    margin: 1.5rem auto;
+    max-width: 700px;
+}
+.info-list dt {
+    font-weight: 600;
+    color: var(--text);
+}
+.info-list dd { margin: 0 0 1rem; }
+.info-list dd a {
+    color: var(--text);
+    text-decoration: underline;
+    line-height: 1.6;
+}
+.info-list dd a:hover { color: var(--secondary-blue); }
+.info-list .content-list { margin: 0; padding-left: 1.4rem; }
+
+@media (min-width: 768px) {
+    /* Tablette + : label aligné à droite, contenu à gauche */
+    .info-list {
+        grid-template-columns: max-content 1fr;
+        gap: 1rem 1.5rem;
+        align-items: start;
+    }
+    .info-list dt {
+        text-align: right;
+        padding-top: 0.1rem;
+    }
+    .info-list dd { margin-bottom: 0; }
+}
+
+
+/* ---------- 5.6 Navigation interne ---------- */
+
+/* Fil d'Ariane */
+.breadcrumb {
+    font-size: 0.95rem;
+    color: var(--secondary-blue);
+    margin-bottom: 1.5rem;
+}
+.breadcrumb a {
+    color: var(--secondary-blue);
+    text-decoration: underline;
+}
+.breadcrumb a:hover { color: var(--primary-blue); }
+.breadcrumb .sep { margin: 0 0.4rem; opacity: 0.6; }
+.breadcrumb .current { color: var(--secondary-blue); font-weight: 500; }
+
+/* Lien retour */
+.back-link {
+    display: inline-block;
+    color: var(--text);
+    text-decoration: underline;
+    margin-bottom: 1.5rem;
+    font-size: 0.95rem;
+}
+.back-link:hover { color: var(--secondary-blue); }
+
+/* Bloc "Accès rapide" */
+.quick-access {
+    background: var(--white);
+    border-radius: var(--radius);
+    padding: 1rem 1.2rem;
+    margin-bottom: 1rem;
+    box-shadow: var(--shadow-soft);
+    text-align: center;
+}
+.quick-access-label {
+    color: var(--text);
+    font-weight: 600;
+    margin-bottom: 0.6rem;
+}
+.quick-access-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem 1.5rem;
+}
+.quick-access-list a {
+    color: var(--secondary-blue);
+    text-decoration: underline;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+.quick-access-list a:hover { color: var(--primary-blue); }
+
+@media (min-width: 768px) {
+    .quick-access { padding: 1.2rem 2rem; }
+    .quick-access-list { gap: 0.5rem 2.5rem; }
+}
+
+/* ---------- 5.7 Formulaires ---------- */
+
+/* Wrapper de formulaire centré et borné en largeur */
+.rdv-form {
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+/* Conteneur d'un champ (ou d'un groupe de champs) */
+.form-group {
+    margin-bottom: 1.5rem;
+    border: none;
+    padding: 0;
+    min-width: 0; /* fieldset force min-width: min-content par défaut */
+}
+
+/* Label principal d'un champ ou legend d'un fieldset */
+.form-label {
+    display: block;
+    font-weight: 700;
+    color: var(--text);
+    font-size: 0.95rem;
+    margin-bottom: 0.5rem;
+    padding: 0; /* reset legend */
+}
+
+/* Astérisque rouge pour les champs obligatoires */
+.form-required {
+    color: var(--required-red);
+    margin-left: 0.15rem;
+    font-weight: 700;
+}
+
+/* Ligne de 2 champs côte à côte (Prénom / Nom) */
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+/* Conteneur d'un champ + son hint sous le champ */
+.form-field {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+/* Style commun à tous les inputs / selects / textarea */
+.form-control {
+    width: 100%;
+    padding: 0.6rem 0.75rem;
+    font: inherit;
+    color: var(--text);
+    background: var(--white);
+    border: 1px solid var(--border-input);
+    border-radius: 0;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+.form-control:focus {
+    outline: none;
+    border-color: var(--secondary-blue);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+}
+.form-control:invalid:not(:placeholder-shown):not(:focus) {
+    border-color: var(--required-red);
+}
+
+/* Select : chevron custom (SVG inline, sans dépendance externe) */
+select.form-control {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8' fill='none' stroke='%23666' stroke-width='1.5'><path d='M1 1.5l5 5 5-5'/></svg>");
+    background-position: right 0.7rem center;
+    background-repeat: no-repeat;
+    background-size: 12px 8px;
+    padding-right: 2.2rem;
+    cursor: pointer;
+}
+
+/* Textarea : redimensionnable verticalement uniquement */
+textarea.form-control {
+    resize: vertical;
+    min-height: 130px;
+    line-height: 1.5;
+}
+
+/* Sous-label (Prénom, Nom sous les champs du groupe Nom) */
+.form-hint {
+    display: block;
+    margin-top: 0.3rem;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    font-weight: 400;
+}
+
+/* Compteur de caractères (textarea) */
+.form-counter {
+    margin-top: 0.4rem;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+/* Zone des boutons d'action en bas du formulaire */
+.form-actions {
+    margin-top: 2rem;
+}
+
+@media (min-width: 768px) {
+    .form-row { gap: 1.5rem; }
+}
+
+/* ============================================================
+   6. PAGES
+   ============================================================ */
+
+/* ---------- 6.1 PAGE ACCUEIL ---------- */
+
+/* Bandeau intro */
+.intro {
+    text-align: center;
+    padding: 1.5rem 1rem;
+    background: var(--light-bg);
+}
+.intro p {
+    color: var(--primary-blue);
+    font-weight: 600;
+    font-size: 1rem;
+    max-width: var(--max-width-article);
+    margin: 0 auto 0.6rem;
+}
+.intro p:last-child { margin-bottom: 0; }
+
+@media (min-width: 768px) {
+    .intro { padding: 2rem 2rem; }
+    .intro p { font-size: 1.05rem; }
+}
+@media (min-width: 1024px) {
+    .intro { padding: 2.5rem 2rem 3rem; }
+    .intro p { font-size: 1.1rem; }
+}
+
+/* Bannière hero "Notre équipe" + spécialités + contact : tronc commun */
+.hero-banner,
+.specialites-banner,
+.contact-section {
+    position: relative;
+    overflow: hidden;
+}
+
+/* --- Hero "Notre équipe" --- */
+.team-banner {
+    min-height: 360px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 1.5rem 1rem;
+}
+@media (min-width: 1024px) {
+    .team-banner { min-height: 520px; }
+}
+
+/* --- Section Spécialités --- */
+.specialites { background: var(--light-bg); }
+
+.specialites-banner {
+    min-height: 400px;
+    padding: 1.5rem 1rem;
+}
+
+.specialites-inner {
+    position: relative;
+    z-index: 2;
+    max-width: var(--max-width);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    align-items: start;
+}
+.specialites-inner .title-pill { justify-self: center; }
+
+.specialites-text {
+    color: var(--white);
+    font-weight: 500;
+    max-width: 520px;
+    justify-self: center;
+    text-align: center;
+    /* Renforce le contraste même sur image très claire ou bruitée */
+    text-shadow: var(--text-shadow-strong);
+}
+.specialites-text p { margin-bottom: 0.8rem; }
+
+.spec-buttons {
+    background: var(--light-bg);
+    padding: 1rem;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.8rem;
+    max-width: var(--max-width);
+    margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+    .specialites-banner { min-height: 480px; padding: 2.5rem 1.5rem; }
+    .specialites-inner {
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+        align-items: center;
+    }
+    .specialites-text {
+        text-align: left;
+        justify-self: start;
+        max-width: 460px;
+    }
+    .spec-buttons {
+        grid-template-columns: repeat(3, 1fr);
+        padding: 1.5rem 1rem;
+        gap: 1rem;
+    }
+}
+@media (min-width: 1024px) {
+    .specialites-banner { min-height: 520px; }
+    .specialites-inner { gap: 4rem; }
+    .specialites-text { max-width: 520px; font-size: 1.05rem; }
+    .spec-buttons {
+        grid-template-columns: repeat(5, 1fr);
+        padding: 1.8rem 2rem 2.5rem;
+        gap: 1.2rem;
+    }
+}
+
+/* --- Section Contact --- */
+.contact-section {
+    min-height: 460px;
+    padding: 2rem 1rem;
+}
+.contact-inner {
+    position: relative;
+    z-index: 2;
+    max-width: var(--max-width);
+    margin: 0 auto;
+    text-align: center;
+}
+.contact-title {
+    color: var(--white);
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    text-shadow: var(--text-shadow-strong);
+}
+.contact-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    align-items: start;
+    justify-items: center;
+}
+.contact-col p {
+    color: var(--white);
+    margin-bottom: 0.4rem;
+    font-weight: 500;
+    text-shadow: var(--text-shadow-strong);
+}
+.contact-col a {
+    color: var(--white);
+    text-decoration: underline;
+}
+
+@media (min-width: 768px) {
+    .contact-section { padding: 3rem 2rem; min-height: 500px; }
+    .contact-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 3rem;
+    }
+    .contact-title { font-size: 1.9rem; }
+}
+@media (min-width: 1024px) {
+    .contact-section { min-height: 540px; }
+    .contact-title { font-size: 2rem; }
+    .contact-col p { font-size: 1.05rem; }
+}
+
+
+/* ---------- 6.2 PAGE ARTICLE (chirurgie-robotique, etc.) ---------- */
+
+/* Titre principal */
+.page-title {
+    color: var(--secondary-blue);
+    font-size: 1.7rem;
+    font-weight: 700;
+    margin-bottom: 1.2rem;
+}
+
+/* Paragraphes du contenu */
+.content p {
+    color: var(--text);
+    line-height: 1.7;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+}
+.content .lead { margin-bottom: 2rem; }
+
+/* :where() : même technique que pour .article-section h2 — on évite que
+   ce style générique écrase les h3 de composants imbriqués (subsection-banner). */
+:where(.content) h3 {
+    color: var(--secondary-blue);
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-top: 1.8rem;
+    margin-bottom: 0.8rem;
+}
+
+/* Titre de référence (uppercase, ex : numéro de décret).
+   La classe .decret-title rétablit naturellement la spécificité. */
+:where(.content) h3.decret-title {
+    color: var(--text);
+    font-size: 0.95rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    margin-top: 0;
+    margin-bottom: 0.8rem;
+}
+
+/* Section d'article (ancrable via #pionniers, etc.) */
+.article-section {
+    margin-top: 2.5rem;
+    /* Marge de scroll : la section ne se colle pas au bord supérieur
+       quand on arrive via une ancre. */
+    scroll-margin-top: 1.5rem;
+}
+/* :where() ramène la spécificité de .article-section à 0 : un composant
+   imbriqué (.section-banner h2) garde la priorité sans recourir à !important. */
+:where(.article-section) h2 {
+    color: var(--secondary-blue);
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+@media (min-width: 768px) {
+    .page-title { font-size: 2rem; }
+    :where(.article-section) h2 { font-size: 1.8rem; }
+    :where(.content) h3 { font-size: 1.4rem; }
+}
+@media (min-width: 1024px) {
+    .page-title { font-size: 2.2rem; }
+    .article-section { margin-top: 3rem; }
+    :where(.article-section) h2 { font-size: 2rem; }
+    :where(.content) h3 { font-size: 1.5rem; }
+    .content p { font-size: 1.05rem; }
+}
+
+
+/* ---------- 6.3 PAGE PROFIL DOCTEUR ---------- */
+
+/* En-tête de page (zone constrainte avant les hero pleine largeur) */
+.profile-header {
+    max-width: var(--max-width-article);
+    margin: 0 auto;
+    padding: 1.5rem 1rem 1rem;
+}
+
+/* Bannière hero pleine largeur (réutilise .banner-bg pour l'overlay) */
+.profile-hero {
+    position: relative;
+    overflow: hidden;
+    padding: 2.5rem 1rem;
+    color: var(--white);
+}
+.profile-hero-inner {
+    position: relative;
+    z-index: 2;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* Titres de bannière hero — variantes blanc / bleu */
+.profile-hero-title {
+    font-size: 1.6rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    text-align: left;
+    line-height: 1.3;
+}
+.profile-hero-title--white { color: rgba(255, 255, 255, 0.9); }
+.profile-hero-title--blue  { color: var(--secondary-blue); }
+
+/* Paragraphes & listes dans une bannière hero : texte blanc lisible */
+.profile-hero p {
+    color: var(--white);
+    line-height: 1.7;
+    margin-bottom: 1rem;
+    text-shadow: var(--text-shadow-soft);
+}
+.profile-list {
+    color: var(--white);
+    padding-left: 1.5rem;
+    margin: 0.5rem 0 1rem;
+    text-shadow: var(--text-shadow-soft);
+}
+.profile-list li {
+    line-height: 1.7;
+    margin-bottom: 0.4rem;
+}
+
+/* Liens inline dans une bannière hero : teinte ambre lisible sur fond sombre */
+.profile-hero a:not(.btn-pill) {
+    color: var(--amber);
+    text-decoration: underline;
+    transition: opacity 0.2s;
+}
+.profile-hero a:not(.btn-pill):hover { opacity: 0.8; }
+
+/* --- Hero "carte" : photo + coordonnées --- */
+.profile-hero-card-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    align-items: center;
+    text-align: center;
+}
+
+.doctor-photo {
+    max-width: 220px;
+    margin: 0 auto;
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow-strong);
+}
+.doctor-photo img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.doctor-info { color: var(--white); }
+.doctor-info h2 {
+    color: var(--white);
+    font-size: 1.35rem;
+    font-weight: 600;
+    margin: 1.5rem 0 1rem;
+    text-shadow: var(--text-shadow-soft);
+}
+.doctor-info h2:first-child { margin-top: 0; }
+
+.doctor-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+}
+.doctor-buttons .btn-pill { margin-top: 0; }
+
+/* `display: inline-block` : la liste reste centrée comme bloc tout en
+   gardant ses items et ses puces alignés à gauche */
+.doctor-list {
+    display: inline-block;
+    text-align: left;
+    list-style: disc;
+    padding: 0 0 0 1.4rem;
+    margin: 0;
+    color: var(--white);
+    text-shadow: var(--text-shadow-soft);
+}
+.doctor-list li { line-height: 1.8; }
+
+@media (min-width: 768px) {
+    .profile-hero { padding: 3.5rem 2rem; }
+    .profile-hero-title { font-size: 1.9rem; }
+
+    /* Photo à gauche, infos à droite */
+    .profile-hero-card-grid {
+        grid-template-columns: auto 1fr;
+        gap: 3rem;
+        align-items: center;
+        text-align: left;
+    }
+    .doctor-photo { max-width: 260px; margin: 0; }
+    .doctor-info { text-align: center; } /* infos centrées dans leur colonne */
+}
+@media (min-width: 1024px) {
+    .profile-hero { padding: 4.5rem 2rem; }
+    .profile-hero-title { font-size: 2.1rem; }
+    .doctor-info h2 { font-size: 1.5rem; }
+    .doctor-photo { max-width: 280px; }
+}
